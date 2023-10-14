@@ -1,4 +1,4 @@
-module github.com/jculley01/REST-API_GO
+module back-end
 
 go 1.21.2
 
@@ -6,6 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	golang.org/x/oauth2 v0.13.0
 	google.golang.org/api v0.146.0
+	google.golang.org/protobuf v1.31.0
 )
 
 require (
@@ -43,6 +44,5 @@ require (
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231009173412-8bfb1ae86b6c // indirect
 	google.golang.org/grpc v1.58.3 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -1,27 +1,55 @@
 package main
 
 import (
+	pb "back-end/user"
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"net/http"
-	"os"
-
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
+	"log"
+	"net/http"
+	"os"
 )
 
-type userInput struct {
-	Name          string `json:"name"`
-	Age           string `json:"age"`
-	CommuteMethod string `json:"commute_method"`
-	College       string `json:"college"`
-	Hobbies       string `json:"hobbies"`
-}
+//type userInput struct {
+//	Name          string `json:"name"`
+//	Age           string `json:"age"`
+//	CommuteMethod string `json:"commute_method"`
+//	College       string `json:"college"`
+//	Hobbies       string `json:"hobbies"`
+//}
+
+type userInput = pb.User
+
+//type User struct {
+//	Name          string `protobuf:"bytes,1,opt,name=name,proto3" json:"name"`
+//	Age           string `protobuf:"bytes,2,opt,name=age,proto3" json:"age"`
+//	CommuteMethod string `protobuf:"bytes,3,opt,name=commute_method,json=commuteMethod,proto3" json:"commute_method"`
+//	College       string `protobuf:"bytes,4,opt,name=college,proto3" json:"college"`
+//	Hobbies       string `protobuf:"bytes,5,opt,name=hobbies,proto3" json:"hobbies"`
+//}
+
+//func (u *User) ProtoReflect() protoreflect.Message {
+//	//TODO implement me
+//	panic("implement me")
+//}
+//
+//func (u *User) ToProto() ([]byte, error) {
+//	return proto.Marshal(u)
+//}
+//
+//func FromProto(data []byte) (*User, error) {
+//	user := &User{}
+//	err := proto.Unmarshal(data, user)
+//	if err != nil {
+//		return nil, err
+//	}
+//	return user, nil
+//}
 
 func getUsersFromSheets(c *gin.Context) {
 	ctx := context.Background()
