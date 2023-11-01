@@ -1,6 +1,7 @@
 package main
 
 import (
+	"back-end/influxdb"
 	pb "back-end/user"
 	"context"
 	"encoding/json"
@@ -15,43 +16,37 @@ import (
 	"os"
 )
 
-//type userInput struct {
-//	Name          string `json:"name"`
-//	Age           string `json:"age"`
-//	CommuteMethod string `json:"commute_method"`
-//	College       string `json:"college"`
-//	Hobbies       string `json:"hobbies"`
-//}
-
 type userInput = pb.User
 
-//type User struct {
-//	Name          string `protobuf:"bytes,1,opt,name=name,proto3" json:"name"`
-//	Age           string `protobuf:"bytes,2,opt,name=age,proto3" json:"age"`
-//	CommuteMethod string `protobuf:"bytes,3,opt,name=commute_method,json=commuteMethod,proto3" json:"commute_method"`
-//	College       string `protobuf:"bytes,4,opt,name=college,proto3" json:"college"`
-//	Hobbies       string `protobuf:"bytes,5,opt,name=hobbies,proto3" json:"hobbies"`
-//}
+var influxClient = influxdb.InitInfluxDB()
+var getUserCount int = 0
 
-//func (u *User) ProtoReflect() protoreflect.Message {
-//	//TODO implement me
-//	panic("implement me")
-//}
-//
-//func (u *User) ToProto() ([]byte, error) {
-//	return proto.Marshal(u)
-//}
-//
-//func FromProto(data []byte) (*User, error) {
-//	user := &User{}
-//	err := proto.Unmarshal(data, user)
-//	if err != nil {
-//		return nil, err
-//	}
-//	return user, nil
-//}
+var getUserNameCount int = 0
+
+var updateUserCount int = 0
+
+var deleteUserCount int = 0
+
+var addUserCount int = 0
+
+func init() {
+	fmt.Println("init called")
+	influxClient = influxdb.InitInfluxDB()
+}
 
 func getUsersFromSheets(c *gin.Context) {
+	getUserCount++
+	tags := map[string]string{
+		"endpoint": "getuser",
+	}
+	fields := map[string]interface{}{
+		"request_count": getUserCount,
+	}
+	err := influxdb.WriteMetric(influxClient, "REST", tags, fields)
+	if err != nil {
+		fmt.Println("Error writing metric:", err)
+	}
+
 	ctx := context.Background()
 	b, err := os.ReadFile("credentials.json")
 	if err != nil {
@@ -96,6 +91,19 @@ func getUsersFromSheets(c *gin.Context) {
 }
 
 func getUserFromSheetsbyName(c *gin.Context) {
+
+	getUserNameCount++
+	tags := map[string]string{
+		"endpoint": "getuser/name",
+	}
+	fields := map[string]interface{}{
+		"request_count": getUserNameCount,
+	}
+	err := influxdb.WriteMetric(influxClient, "REST", tags, fields)
+	if err != nil {
+		fmt.Println("Error writing metric:", err)
+	}
+
 	ctx := context.Background()
 	b, err := os.ReadFile("credentials.json")
 	if err != nil {
@@ -154,6 +162,19 @@ func getUserFromSheetsbyName(c *gin.Context) {
 }
 
 func deleteUserFromSheets(c *gin.Context) {
+
+	deleteUserCount++
+	tags := map[string]string{
+		"endpoint": "deleteuser/name",
+	}
+	fields := map[string]interface{}{
+		"request_count": deleteUserCount,
+	}
+	err := influxdb.WriteMetric(influxClient, "REST", tags, fields)
+	if err != nil {
+		fmt.Println("Error writing metric:", err)
+	}
+
 	ctx := context.Background()
 	b, err := os.ReadFile("credentials.json")
 	if err != nil {
@@ -249,6 +270,19 @@ func getSheetID(spreadsheetID, sheetName string, srv *sheets.Service) int64 {
 }
 
 func updateUserInSheets(c *gin.Context) {
+
+	updateUserCount++
+	tags := map[string]string{
+		"endpoint": "updateuser/name",
+	}
+	fields := map[string]interface{}{
+		"request_count": updateUserCount,
+	}
+	err := influxdb.WriteMetric(influxClient, "REST", tags, fields)
+	if err != nil {
+		fmt.Println("Error writing metric:", err)
+	}
+
 	ctx := context.Background()
 	b, err := os.ReadFile("credentials.json")
 	if err != nil {
@@ -325,6 +359,19 @@ func updateUserInSheets(c *gin.Context) {
 }
 
 func addUser(context *gin.Context) {
+
+	addUserCount++
+	tags := map[string]string{
+		"endpoint": "adduser",
+	}
+	fields := map[string]interface{}{
+		"request_count": addUserCount,
+	}
+	err := influxdb.WriteMetric(influxClient, "REST", tags, fields)
+	if err != nil {
+		fmt.Println("Error writing metric:", err)
+	}
+
 	var newUser userInput
 
 	if err := context.BindJSON(&newUser); err != nil {
