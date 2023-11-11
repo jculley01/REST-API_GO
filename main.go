@@ -584,7 +584,7 @@ func addUsertoGoogleSheets(user userInput) error {
 }
 
 func registerWithRegistry(name, host string, port int, servType string) {
-	registryURL := "ws://localhost:8090/register" // WebSocket URL
+	registryURL := "wss://centralreg-necuf5ddgq-ue.a.run.app/register" // WebSocket URL
 	registrationData := Registration{
 		Name: name,
 		Host: host,
@@ -638,8 +638,8 @@ type Registration struct {
 
 func main() {
 	serviceName := "Student-Info REST Service"
-	serviceHost := "localhost"
-	servicePort := 4000
+	serviceHost := "rest-apigo-main-6j7fqbeloq-ue.a.run.app"
+	servicePort := 8080
 	serviceType := "REST"
 
 	// Register your service with the registry
