@@ -75,7 +75,7 @@ func getUsersFromSheets(c *gin.Context) {
 		latencyMs := float64(latency.Nanoseconds()) / 1000000.0
 		fields["latency"] = latencyMs
 
-		if err := influxdb.WriteMetric(influxClient, "REST", tags, fields); err != nil {
+		if err := influxdb.WriteMetric(influxClient, "Student-Info REST Service", tags, fields); err != nil {
 			fmt.Println("Error writing metrics:", err)
 		}
 	}()
@@ -153,7 +153,7 @@ func getUserFromSheetsbyName(c *gin.Context) {
 		latencyMs := float64(latency.Nanoseconds()) / 1000000.0
 		fields["latency"] = latencyMs
 
-		if err := influxdb.WriteMetric(influxClient, "REST", tags, fields); err != nil {
+		if err := influxdb.WriteMetric(influxClient, "Student-Info REST Service", tags, fields); err != nil {
 			fmt.Println("Error writing metrics:", err)
 		}
 	}()
@@ -233,7 +233,7 @@ func deleteUserFromSheets(c *gin.Context) {
 		latencyMs := float64(latency.Nanoseconds()) / 1000000.0
 		fields["latency"] = latencyMs
 
-		if err := influxdb.WriteMetric(influxClient, "REST", tags, fields); err != nil {
+		if err := influxdb.WriteMetric(influxClient, "Student-Info REST Service", tags, fields); err != nil {
 			fmt.Println("Error writing metrics:", err)
 		}
 	}()
@@ -357,7 +357,7 @@ func updateUserInSheets(c *gin.Context) {
 		latencyMs := float64(latency.Nanoseconds()) / 1000000.0
 		fields["latency"] = latencyMs
 
-		if err := influxdb.WriteMetric(influxClient, "REST", tags, fields); err != nil {
+		if err := influxdb.WriteMetric(influxClient, "Student-Info REST Service", tags, fields); err != nil {
 			fmt.Println("Error writing metrics:", err)
 		}
 	}()
@@ -468,7 +468,7 @@ func addUser(context *gin.Context) {
 		latencyMs := float64(latency.Nanoseconds()) / 1000000.0
 		fields["latency"] = latencyMs
 
-		if err := influxdb.WriteMetric(influxClient, "REST", tags, fields); err != nil {
+		if err := influxdb.WriteMetric(influxClient, "Student-Info REST Service", tags, fields); err != nil {
 			fmt.Println("Error writing metrics:", err)
 		}
 	}()
@@ -598,7 +598,7 @@ func registerWithRegistry(name, host string, port int, servType string) {
 		return
 	}
 
-	ticker := time.NewTicker(10 * time.Second) // Retry every 10 seconds
+	ticker := time.NewTicker(30 * time.Second) // Retry every 30 seconds
 	defer ticker.Stop()
 
 	for {

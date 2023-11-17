@@ -8,7 +8,7 @@ import (
 
 const (
 	url    = "http://34.86.236.100"
-	bucket = "testing"
+	bucket = "combined_metrics"
 	org    = "API-Observability"
 	token  = "AxNHAn8hBBhsHz0o6HVJ2iM9gfGqybVWugTx5crw0o2yvkPTURsZqztPjxOXp4YWR2Hy9jiQPZePyilXFh7lcg=="
 )
